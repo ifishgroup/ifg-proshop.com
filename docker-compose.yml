@@ -3,7 +3,8 @@ version: '3'
 services:
 
     ms-webapp:
-        image: 'ifg/ms-webapp'
+        image: 'ifg/proshop'
+        build: .
         ports:
             - 5000:5000
 
