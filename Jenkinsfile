@@ -12,16 +12,16 @@ try {
                 "COMPOSE_FILE=common-services.yml"
         ]) {
 
-            // stage('checkout') {
-            //     checkout scm
-            // }
+            stage('checkout') {
+                checkout scm
+            }
 
             stage('yarn install') {
-                sh "docker run --rm -v $(pwd):/usr/src/ node:8.7.0 yarn --cwd /usr/src/"
+                sh "docker run --rm -v ${env.WORKSPACE}:/usr/src/ node:8.7.0 yarn --cwd /usr/src/"
             }
 
             stage('unit/component test') {
-                sh "docker run --rm -v $(pwd):/usr/src/ node:8.7.0 yarn --cwd /usr/src/ test"
+                sh "docker run --rm -v ${env.WORKSPACE}:/usr/src/ node:8.7.0 yarn --cwd /usr/src/ test"
             }
 
 
@@ -37,9 +37,9 @@ try {
 
                     try {
                         stage('deploy to staging') {
-                            sh """
-                                # provision aws environment
-                                # deploy container
+                            echo """
+                                provision aws environment
+                                deploy container
                             """
                             //ip = sh returnStdout: true, script: "docker-machine ip $name"
                             //ip = ip.trim()
@@ -66,7 +66,7 @@ try {
                         throw e
                     } finally {
                         stage('staging teardown') {
-                            sh "# teardown staged environment"
+                            echo "teardown staged environment"
                             // notifyGithub("Staged build @ $ip was removed")
                             // slackSend(color: 'good', message: "Staged build @ $ip was removed")
                         }
@@ -86,9 +86,7 @@ try {
                 }
 
                 stage('deploy to production') {
-                    sh """
-                        # deploy service to production
-                    """
+                    echo "deploy service to production"
                 }
             }
         }
