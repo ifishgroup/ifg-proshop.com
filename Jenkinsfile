@@ -12,16 +12,16 @@ try {
                 "COMPOSE_FILE=common-services.yml"
         ]) {
 
-            stage('checkout') {
-                checkout scm
-            }
+            // stage('checkout') {
+            //     checkout scm
+            // }
 
             stage('yarn install') {
-                sh "docker run -it --rm -v (pwd):/usr/src/ node:8.7.0 yarn --cwd /usr/src/"
+                sh "docker run --rm -v $(pwd):/usr/src/ node:8.7.0 yarn --cwd /usr/src/"
             }
 
             stage('unit/component test') {
-                sh "docker run -it --rm -v (pwd):/usr/src/ node:8.7.0 yarn --cwd /usr/src/ test"
+                sh "docker run --rm -v $(pwd):/usr/src/ node:8.7.0 yarn --cwd /usr/src/ test"
             }
 
 
