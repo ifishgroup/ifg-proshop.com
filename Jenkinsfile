@@ -1,6 +1,6 @@
 #!groovy
 
-def version  = "0.1.${env.BUILD_NUMBER}"
+def version  = "1.0.${env.BUILD_NUMBER}"
 def image    = "ifg-proshop"
 
 try {
